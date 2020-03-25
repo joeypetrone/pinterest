@@ -3,9 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:700&display=swap" rel="stylesheet">
+  <link rel='icon' href='favicon.ico' type='image/x-icon'>
   <title>Pinterest</title>
 </head>
 <body>
-  <button class="btn btn-danger m-2"><i class="fab fa-pinterest"></i></button>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light mb-2">
+    <a class="navbar-brand text-danger" href="#"><i class="fab fa-pinterest"></i> Pinterest</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto">                                         
+        <li class="nav-item active">
+          <button id="navbar-logout-button" class="nav-link btn btn-danger text-white pr-3 pl-3">Logout</button>
+        </li>
+      </ul>  
+    </div>
+  </nav>  
 </body>
 </html>
