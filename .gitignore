@@ -5,4 +5,4 @@ node_modules/
 dist/
 build/
 .firebase/
-src/javascript/helpers/apiKeys.json
+src/javascripts/helpers/apiKeys.json
