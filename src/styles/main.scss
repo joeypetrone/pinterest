@@ -5,20 +5,31 @@ body {
   background-color: white;
 
   .navbar {
+    padding-bottom: 11px;
     .navbar-brand {
-      font-size: 30px;
+      font-size: 29px;
+      padding-top: 1px;
+      padding-left: 6px;
+      padding-bottom: 0px;
+      .fab {
+        color: #e60023;
+      }
     }  
-    #navbar-logout-button {
-      border-radius: 25px;
-    }
   }
 
   h1 {
     font-family: 'Roboto', sans-serif;
     font-weight: bold;
   }
-}
 
-.hide {
-  display: none;
+  .btn {
+    border-radius: 25px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+    background-color: #e60023;
+  }
+
+  .hide {
+    display: none;
+  }
 }

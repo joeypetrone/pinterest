@@ -1,0 +1,22 @@
+{
+  "board1": {
+    "name": "Trigonometry",
+    "description": "Trigonometry is fun!",
+    "uid": "TyjacMFn9mM9Z38KMPgRIoxRyGF2"
+  },
+  "board2": {
+    "name": "Physics",
+    "description": "Physics is fun!",
+    "uid": "TyjacMFn9mM9Z38KMPgRIoxRyGF2"  
+  },
+  "board3": {
+    "name": "Computers",
+    "description": "Yay, computers!",
+    "uid": "TyjacMFn9mM9Z38KMPgRIoxRyGF2"
+  },
+  "board4": {
+    "name": "Robots",
+    "description": "Robots are cool.",
+    "uid": "12345"
+  }
+}
