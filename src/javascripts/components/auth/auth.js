@@ -11,7 +11,7 @@ const signMeIn = () => {
 const loginButton = () => {
   let domString = '';
   domString += '<div class="d-flex justify-content-center">';
-  domString += '  <button id="google-auth" class="btn btn-danger">GOOGLE LOGIN</button>';
+  domString += '  <button id="google-auth" class="btn btn-danger">Google Login</button>';
   domString += '</div>';
 
   utils.printToDom('auth', domString);
