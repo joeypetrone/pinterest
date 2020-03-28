@@ -4,11 +4,12 @@ import 'firebase/auth';
 import boardComponent from '../boards/boards';
 import boardsData from '../../helpers/data/boardsData';
 import utils from '../../helpers/utils';
+import singleBoard from '../singleBoard/singleBoard';
 
 const buildBoards = () => {
   const myUid = firebase.auth().currentUser.uid;
 
-  boardsData.getBoards(myUid)
+  boardsData.getBoardsByUid(myUid)
     .then((boards) => {
       let domString = '';
       domString += '<h1 class="text-center">Boards</h1>';
@@ -18,6 +19,7 @@ const buildBoards = () => {
       });
       domString += '</div>';
       utils.printToDom('boards', domString);
+      $('body').on('click', '.board-card', singleBoard.buildSingleBoard);
     })
     .catch((err) => console.error('get boards broke', err));
 };
