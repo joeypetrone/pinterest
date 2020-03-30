@@ -8,6 +8,13 @@ const backToBoards = () => {
   utils.printToDom('single-board', '');
 };
 
+const removePin = (e) => {
+  const pinId = e.target.closest('.card').id;
+  pinsData.deletePin(pinId);
+  // eslint-disable-next-line no-use-before-define
+  buildSingleBoard();
+};
+
 const buildSingleBoard = (e) => {
   const boardId = e.target.closest('.card').id;
 
@@ -25,6 +32,7 @@ const buildSingleBoard = (e) => {
       domString += '</div>';
       utils.printToDom('single-board', domString);
       $('.back-to-boards-button').click(backToBoards);
+      $('body').on('click', '.delete-pin', removePin);
     })
     .catch((err) => console.error('problem with single board', err));
 };
