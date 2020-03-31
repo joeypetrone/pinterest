@@ -6,6 +6,12 @@ import boardsData from '../../helpers/data/boardsData';
 import utils from '../../helpers/utils';
 import singleBoard from '../singleBoard/singleBoard';
 
+// const buildSingleBoardEvent = (e) => {
+//   const boardId = e.target.closest('.card').id;
+//   singleBoard.buildSingleBoard(boardId);
+// };
+
+
 const buildBoards = () => {
   const myUid = firebase.auth().currentUser.uid;
 

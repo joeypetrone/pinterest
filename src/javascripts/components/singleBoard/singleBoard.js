@@ -1,7 +1,9 @@
 import pinComponent from '../pins/pins';
 import pinsData from '../../helpers/data/pinsData';
-import boardsData from '../../helpers/data/boardsData';
+import singleBoardHeader from '../singleBoardHeader/singleBoardHeader';
 import utils from '../../helpers/utils';
+import boardsData from '../../helpers/data/boardsData';
+
 
 const backToBoards = () => {
   $('#boards').removeClass('hide');
@@ -9,24 +11,42 @@ const backToBoards = () => {
   utils.printToDom('single-board', '');
 };
 
-const removePin = (e, boardId) => {
-  console.log('in removePin');
+const removePin = (event) => {
+  const removePinId = event.target.closest('.card').id;
+  const removePinBoardId = event.data;
 
-  const pinId = e.target.closest('.card').id;
-  pinsData.deletePin(pinId)
-    .then(() => {
-      boardsData.getBoardByBoardId(boardId)
-        .then((board) => {
-          // eslint-disable-next-line no-use-before-define
-          buildSingleBoard(board);
+  console.log('board id', removePinBoardId);
+
+  let domString = '';
+
+  boardsData.getBoardByBoardId(removePinBoardId)
+    .then((board) => {
+      console.log('singleBoardHeader #2', board);
+      domString += singleBoardHeader.buildSingleBoardHeader(board);
+      pinsData.deletePin(removePinId)
+        .then(() => {
+          pinsData.getPinsByBoardId(removePinBoardId)
+            .then((pins) => {
+              console.log('pins in removePin', pins);
+              if (pins.length === 0) {
+                domString += '';
+              } else {
+                domString += pinComponent.pinMaker(pins);
+              }
+
+              utils.printToDom('single-board', domString);
+            })
+            .catch((err) => console.error('problem with get pins in remove pin', err));
         })
-        .catch((err) => console.error('In removePin, problem finding board', err));
+        .catch((err) => console.error('problem with delete pin in remove pin', err));
     })
-    .catch((err) => console.error('could not delete pin', err));
+    .catch((err) => console.error('problem with get board in remove pin', err));
 };
 
 const buildSingleBoard = (e) => {
   const boardId = e.target.closest('.card').id;
+  console.log('in single board', boardId);
+
 
   $('#boards').addClass('hide');
   $('#single-board').removeClass('hide');
@@ -35,23 +55,20 @@ const buildSingleBoard = (e) => {
 
   boardsData.getBoardByBoardId(boardId)
     .then((board) => {
-      domString += `<h1 class="text-center">${board.name}</h1>`;
-      domString += `<p class="text-center">${board.description}</p>`;
-      domString += '<button class="btn btn-danger back-to-boards-button rounded-circle mb-3 mt-2 ml-3"><i class="fas fa-arrow-left"></i></button>';
+      console.log('singleBoardHeader #1', board);
+      domString += singleBoardHeader.buildSingleBoardHeader(board);
       pinsData.getPinsByBoardId(boardId)
         .then((pins) => {
-          domString += '<div class="d-flex flex-wrap">';
-          pins.forEach((pin) => {
-            domString += pinComponent.pinMaker(pin);
-          });
-          domString += '</div>';
+          domString += pinComponent.pinMaker(pins);
+
           utils.printToDom('single-board', domString);
-          $('.back-to-boards-button').click(backToBoards);
-          $('body').on('click', '.delete-pin', removePin(boardId));
+          $('body').on('click', '.back-to-boards-button', backToBoards);
+
+          $('#single-board').on('click', '.delete-pin', boardId, removePin);
         })
-        .catch((err) => console.error('problem with single board', err));
+        .catch((err) => console.error('problem with get pins in single board', err));
     })
-    .catch((err) => console.error('problem finding board', err));
+    .catch((err) => console.error('problem with get board in single board', err));
 };
 
 export default { buildSingleBoard };
