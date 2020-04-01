@@ -1,6 +1,9 @@
 import pinComponent from '../pins/pins';
 import pinsData from '../../helpers/data/pinsData';
+import singleBoardHeader from '../singleBoardHeader/singleBoardHeader';
 import utils from '../../helpers/utils';
+import boardsData from '../../helpers/data/boardsData';
+
 
 const backToBoards = () => {
   $('#boards').removeClass('hide');
@@ -14,19 +17,24 @@ const buildSingleBoard = (e) => {
   $('#boards').addClass('hide');
   $('#single-board').removeClass('hide');
 
-  let domString = '';
-  domString += '<button class="btn btn-danger back-to-boards-button rounded-circle mb-3 mt-2 ml-3"><i class="fas fa-arrow-left"></i></button>';
-  pinsData.getPinsByBoardId(boardId)
-    .then((pins) => {
-      domString += '<div class="d-flex flex-wrap">';
-      pins.forEach((pin) => {
-        domString += pinComponent.pinMaker(pin);
-      });
-      domString += '</div>';
+  boardsData.getBoardByBoardId(boardId)
+    .then((board) => {
+      let domString = '';
+
+      domString += singleBoardHeader.buildSingleBoardHeader(board);
+      domString += '<div id="single-board-pins"></div>';
+
       utils.printToDom('single-board', domString);
-      $('.back-to-boards-button').click(backToBoards);
+      $('body').on('click', '.back-to-boards-button', backToBoards);
+      $('#single-board-pins').on('click', '.delete-pin', boardId, pinComponent.removePin);
+      pinsData.getPinsByBoardId(boardId)
+        .then((pins) => {
+          domString = pinComponent.pinMaker(pins);
+          utils.printToDom('single-board-pins', domString);
+        })
+        .catch((err) => console.error('problem with get pins in single board', err));
     })
-    .catch((err) => console.error('problem with single board', err));
+    .catch((err) => console.error('problem with get board in single board', err));
 };
 
 export default { buildSingleBoard };
