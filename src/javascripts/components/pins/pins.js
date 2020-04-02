@@ -2,9 +2,9 @@ import pinsData from '../../helpers/data/pinsData';
 import utils from '../../helpers/utils';
 import './pins.scss';
 
-const removePin = (event) => {
-  const removePinId = event.target.closest('.card').id;
-  const removePinBoardId = event.data;
+const removePin = (e) => {
+  const removePinId = e.target.closest('.card').id;
+  const removePinBoardId = e.data;
 
   pinsData.deletePin(removePinId)
     .then(() => {
@@ -29,7 +29,7 @@ const removePin = (event) => {
 const pinMaker = (pins) => {
   let domString = '';
 
-  domString += '<div id="pin-container" class="d-flex flex-wrap align-content-start pl-3 pr-3">';
+  domString += '<div id="pin-container" class="d-flex flex-wrap pl-3 pr-3">';
 
   pins.forEach((pin) => {
     domString += '<div class="w-25 pl-2 pr-2 pb-4">';

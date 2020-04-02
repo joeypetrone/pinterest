@@ -3,14 +3,28 @@ import 'firebase/auth';
 
 import boardComponent from '../boards/boards';
 import boardsData from '../../helpers/data/boardsData';
-import utils from '../../helpers/utils';
+import pinsData from '../../helpers/data/pinsData';
 import singleBoard from '../singleBoard/singleBoard';
 
-// const buildSingleBoardEvent = (e) => {
-//   const boardId = e.target.closest('.card').id;
-//   singleBoard.buildSingleBoard(boardId);
-// };
+import utils from '../../helpers/utils';
 
+const removeBoard = (e) => {
+  const selectedBoardId = e.target.closest('.card').id;
+
+  boardsData.deleteBoard(selectedBoardId)
+    .then(() => {
+      pinsData.getPinsByBoardId(selectedBoardId)
+        .then((pins) => {
+          pins.forEach((pin) => {
+            pinsData.deletePin(pin.id);
+          });
+          // eslint-disable-next-line no-use-before-define
+          buildBoards();
+        })
+        .catch((err) => console.error('problem with get pins in remove board', err));
+    })
+    .catch((err) => console.error('problem with delete board in remove board', err));
+};
 
 const buildBoards = () => {
   const myUid = firebase.auth().currentUser.uid;
@@ -18,14 +32,15 @@ const buildBoards = () => {
   boardsData.getBoardsByUid(myUid)
     .then((boards) => {
       let domString = '';
-      domString += '<h1 class="text-center">Boards</h1>';
-      domString += '<div class="d-flex flex-wrap">';
+      domString += '<h1 class="text-center mb-4">Boards</h1>';
+      domString += '<div id="boards-container" class="d-flex flex-wrap">';
       boards.forEach((board) => {
         domString += boardComponent.boardMaker(board);
       });
       domString += '</div>';
       utils.printToDom('boards', domString);
-      $('body').on('click', '.board-card', singleBoard.buildSingleBoard);
+      $('body').on('click', '.view-board', singleBoard.buildSingleBoard);
+      $('body').on('click', '.delete-board', removeBoard);
     })
     .catch((err) => console.error('get boards broke', err));
 };

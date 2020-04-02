@@ -1,3 +1,5 @@
+import './singleBoardHeader.scss';
+
 const buildSingleBoardHeader = (board) => {
   let domString = '';
 

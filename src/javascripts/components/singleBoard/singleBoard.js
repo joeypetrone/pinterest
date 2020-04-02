@@ -26,11 +26,11 @@ const buildSingleBoard = (e) => {
 
       utils.printToDom('single-board', domString);
       $('body').on('click', '.back-to-boards-button', backToBoards);
-      $('#single-board-pins').on('click', '.delete-pin', boardId, pinComponent.removePin);
       pinsData.getPinsByBoardId(boardId)
         .then((pins) => {
           domString = pinComponent.pinMaker(pins);
           utils.printToDom('single-board-pins', domString);
+          $('#single-board-pins').on('click', '.delete-pin', boardId, pinComponent.removePin);
         })
         .catch((err) => console.error('problem with get pins in single board', err));
     })

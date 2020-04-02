@@ -1,0 +1,13 @@
+#boards-container {
+
+  .delete-board {
+    position: absolute;
+    top: 6px;
+    left: 330px;
+    display: none;
+  }
+
+  .card:hover + .delete-board, .delete-board:hover {
+    display: inline-block;
+  }
+}
