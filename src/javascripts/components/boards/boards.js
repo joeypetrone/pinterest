@@ -1,15 +1,31 @@
+import './boards.scss';
+
+const showButtons = (e) => {
+  const enteringCurrentBoard = e.target.closest('.card').id;
+
+  $(`#delete-${enteringCurrentBoard}`).removeClass('hide');
+};
+
+const hideButtons = (e) => {
+  const leavingCurrentBoard = e.target.closest('.card').id;
+
+  $(`#delete-${leavingCurrentBoard}`).addClass('hide');
+};
+
 const boardMaker = (board) => {
   let domString = '';
   domString += '<div class="col-4">';
-  domString += `<div class="card board-card" id="${board.id}">`;
+  domString += `<div class="card board-card"  id="${board.id}">`;
   domString += `<div class="card-header">${board.name}</div>`;
   domString += '<div class="card-body">';
   domString += '<h6 class="card-title">Description</h6>';
   domString += `<p class="card-text">${board.description}</p>`;
   domString += '</div>';
+  domString += `<button id="delete-${board.id}" class="btn btn-danger delete-board hide" ><i class="fas fa-trash"></i></button>`;
+  domString += `<button id="view-${board.id}" class="btn btn-danger view-board">View</button>`;
   domString += '</div>';
   domString += '</div>';
   return domString;
 };
 
-export default { boardMaker };
+export default { boardMaker, showButtons, hideButtons };
