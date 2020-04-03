@@ -41,6 +41,8 @@ const buildBoards = () => {
       utils.printToDom('boards', domString);
       $('body').on('click', '.view-board', singleBoard.buildSingleBoard);
       $('body').on('click', '.delete-board', removeBoard);
+      $('.card').mouseenter(boardComponent.showButtons);
+      $('.card').mouseleave(boardComponent.hideButtons);
     })
     .catch((err) => console.error('get boards broke', err));
 };

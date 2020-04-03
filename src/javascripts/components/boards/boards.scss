@@ -2,12 +2,13 @@
 
   .delete-board {
     position: absolute;
-    top: 6px;
-    left: 330px;
-    display: none;
+    top: 5px;
+    left: 347px;
   }
 
-  .card:hover + .delete-board, .delete-board:hover {
-    display: inline-block;
+  .view-board {
+    position: absolute;
+    bottom: 5px;
+    left: 326px;
   }
 }
