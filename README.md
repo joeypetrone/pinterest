@@ -29,6 +29,3 @@ This project allows users to login via Google authentication and interact with b
 1. In your browser go to `http://localhost:9999`
 ## Contributors
 * Joey Petrone
-* John Fleming
-* Michele Rawlins
-* Liza Star
