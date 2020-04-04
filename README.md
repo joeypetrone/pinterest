@@ -1,4 +1,4 @@
-# Pinterest (Imitation)
+# Pinterest
 
 ## Description
 This project allows users to login via Google authentication and interact with boards and pins. 
