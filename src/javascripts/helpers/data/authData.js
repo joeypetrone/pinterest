@@ -18,6 +18,7 @@ const checkLoginStatus = () => {
       boardsDiv.removeClass('hide');
       logoutButton.removeClass('hide');
       allBoards.buildBoards();
+      allBoards.boardsEvents();
     } else {
       homeDiv.removeClass('hide');
       authDiv.removeClass('hide');
