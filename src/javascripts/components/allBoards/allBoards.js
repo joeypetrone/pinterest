@@ -80,8 +80,6 @@ const buildBoards = () => {
       });
       domString += '</div>';
       utils.printToDom('boards', domString);
-      $('.card').mouseenter(boardComponent.showButtons);
-      $('.card').mouseleave(boardComponent.hideButtons);
     })
     .catch((err) => console.error('get boards broke', err));
 };

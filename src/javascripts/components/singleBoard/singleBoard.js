@@ -1,4 +1,5 @@
 import pinComponent from '../pins/pins';
+import newPinComponent from '../newPin/newPin';
 import pinsData from '../../helpers/data/pinsData';
 import singleBoardHeader from '../singleBoardHeader/singleBoardHeader';
 import utils from '../../helpers/utils';
@@ -22,6 +23,12 @@ const buildSingleBoard = (e) => {
       let domString = '';
 
       domString += singleBoardHeader.buildSingleBoardHeader(board);
+      domString += '<div class="d-flex justify-content-center mb-4">';
+      domString += '<button class="btn btn-danger" type="button" data-toggle="collapse" data-target="#add-pin-form" aria-expanded="false" aria-controls="addPinsForm">Add Pin</button>';
+      domString += '</div>';
+      domString += '<div class="collapse" id="add-pin-form">';
+      domString += newPinComponent.newPinForm();
+      domString += '</div>';
       domString += '<div id="single-board-pins"></div>';
 
       utils.printToDom('single-board', domString);
