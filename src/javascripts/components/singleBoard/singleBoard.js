@@ -5,6 +5,7 @@ import singleBoardHeader from '../singleBoardHeader/singleBoardHeader';
 import utils from '../../helpers/utils';
 import boardsData from '../../helpers/data/boardsData';
 
+import './singleBoard.scss';
 
 const backToBoards = () => {
   $('#boards').removeClass('hide');
@@ -23,19 +24,18 @@ const buildSingleBoard = (e) => {
       let domString = '';
 
       domString += singleBoardHeader.buildSingleBoardHeader(board);
-      domString += '<div class="d-flex justify-content-center mb-4">';
+      domString += '<div class="d-flex justify-content-center mb-4" id="add-pin-container">';
       domString += '<button class="btn btn-danger" type="button" data-toggle="collapse" data-target="#add-pin-form" aria-expanded="false" aria-controls="addPinsForm">Add Pin</button>';
       domString += '</div>';
       domString += '<div class="collapse" id="add-pin-form">';
-      domString += newPinComponent.newPinForm();
+      domString += newPinComponent.newPinForm(boardId);
       domString += '</div>';
       domString += '<div id="single-board-pins"></div>';
 
       utils.printToDom('single-board', domString);
-      $('body').on('click', '.back-to-boards-button', backToBoards);
       pinsData.getPinsByBoardId(boardId)
         .then((pins) => {
-          domString = pinComponent.pinMaker(pins);
+          domString = pinComponent.buildPins(pins);
           utils.printToDom('single-board-pins', domString);
           $('#single-board-pins').on('click', '.delete-pin', boardId, pinComponent.removePin);
         })
@@ -44,4 +44,9 @@ const buildSingleBoard = (e) => {
     .catch((err) => console.error('problem with get board in single board', err));
 };
 
-export default { buildSingleBoard };
+const pinsEvents = () => {
+  $('body').on('click', '#back-to-boards-button', backToBoards);
+  $('body').on('click', '#pin-creator', pinComponent.makePin);
+};
+
+export default { buildSingleBoard, pinsEvents };

@@ -16,7 +16,7 @@ const removePin = (e) => {
             domString += '';
           } else {
             // eslint-disable-next-line no-use-before-define
-            domString += pinMaker(pins);
+            domString += buildPins(pins);
           }
 
           utils.printToDom('single-board-pins', domString);
@@ -26,7 +26,12 @@ const removePin = (e) => {
     .catch((err) => console.error('problem with delete pin in remove pin', err));
 };
 
-const pinMaker = (pins) => {
+const makePin = (e) => {
+  e.preventDefault();
+  // const currentBoard = e.target.closest('.card').id;
+};
+
+const buildPins = (pins) => {
   let domString = '';
 
   domString += '<div id="pin-container" class="d-flex flex-wrap pl-3 pr-3">';
@@ -45,4 +50,4 @@ const pinMaker = (pins) => {
   return domString;
 };
 
-export default { pinMaker, removePin };
+export default { buildPins, removePin, makePin };

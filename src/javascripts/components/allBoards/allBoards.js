@@ -33,10 +33,6 @@ const makeBoard = (e) => {
   const newBoardName = $('#board-name').val();
   const newBoardDescription = $('#board-description').val();
 
-  console.log('newBoardName', newBoardName);
-  console.log('newBoardDescription', newBoardDescription);
-
-
   if (newBoardName === '' || newBoardDescription === '') {
     $('#board-name').addClass('is-invalid');
     $('#board-description').addClass('is-invalid');
