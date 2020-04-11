@@ -10,7 +10,8 @@ import singleBoard from '../singleBoard/singleBoard';
 import utils from '../../helpers/utils';
 import './allBoards.scss';
 
-const removeBoard = (e) => {
+// REMOVE BOARD EVENT //
+const removeBoardEvent = (e) => {
   const selectedBoardId = e.target.closest('.card').id;
 
   boardsData.deleteBoard(selectedBoardId)
@@ -28,24 +29,22 @@ const removeBoard = (e) => {
     .catch((err) => console.error('problem with delete board in remove board', err));
 };
 
-const makeBoard = (e) => {
+// MAKE BOARD EVENT //
+const makeBoardEvent = (e) => {
   e.preventDefault();
   const newBoardName = $('#board-name').val();
   const newBoardDescription = $('#board-description').val();
 
-  console.log('newBoardName', newBoardName);
-  console.log('newBoardDescription', newBoardDescription);
-
-
   if (newBoardName === '' || newBoardDescription === '') {
+    // invalid input
     $('#board-name').addClass('is-invalid');
     $('#board-description').addClass('is-invalid');
     $('#board-name').on('click', () => $('#board-name').removeClass('is-invalid'));
     $('#board-description').on('click', () => $('#board-description').removeClass('is-invalid'));
   } else {
     const newBoard = {
-      name: $('#board-name').val(),
-      description: $('#board-description').val(),
+      name: newBoardName,
+      description: newBoardDescription,
       uid: firebase.auth().currentUser.uid,
     };
 
@@ -56,10 +55,17 @@ const makeBoard = (e) => {
         // eslint-disable-next-line no-use-before-define
         buildBoards();
       })
-      .catch();
+      .catch((err) => console.error('problem with add board in make board', err));
   }
 };
 
+// CLEAR BOARD INPUT VALIDATION EVENT //
+const clearBoardInputValidationEvent = () => {
+  $('#board-name').removeClass('is-invalid');
+  $('#board-description').removeClass('is-invalid');
+};
+
+// BUILD BOARDS //
 const buildBoards = () => {
   const myUid = firebase.auth().currentUser.uid;
 
@@ -69,7 +75,7 @@ const buildBoards = () => {
 
       domString += '<h1 class="text-center">Boards</h1>';
       domString += '<div class="d-flex justify-content-center mb-4">';
-      domString += '<button class="btn btn-danger" type="button" data-toggle="collapse" data-target="#add-board-form" aria-expanded="false" aria-controls="addBoardsForm">Add Board</button>';
+      domString += '<button class="btn btn-danger" id="add-board-button" type="button" data-toggle="collapse" data-target="#add-board-form" aria-expanded="false" aria-controls="addBoardsForm">Add Board</button>';
       domString += '</div>';
       domString += '<div class="collapse" id="add-board-form">';
       domString += newBoardComponent.newBoardForm();
@@ -80,16 +86,16 @@ const buildBoards = () => {
       });
       domString += '</div>';
       utils.printToDom('boards', domString);
-      $('.card').mouseenter(boardComponent.showButtons);
-      $('.card').mouseleave(boardComponent.hideButtons);
     })
     .catch((err) => console.error('get boards broke', err));
 };
 
+// BOARDS EVENTS //
 const boardsEvents = () => {
-  $('body').on('click', '.view-board', singleBoard.buildSingleBoard);
-  $('body').on('click', '.delete-board', removeBoard);
-  $('body').on('click', '#board-creator', makeBoard);
+  $('body').on('click', '.view-board', singleBoard.buildSingleBoardEvent);
+  $('body').on('click', '.delete-board', removeBoardEvent);
+  $('body').on('click', '#add-board-button', clearBoardInputValidationEvent);
+  $('body').on('click', '#board-creator', makeBoardEvent);
 };
 
 export default { buildBoards, boardsEvents };
