@@ -1,37 +1,6 @@
-import pinsData from '../../helpers/data/pinsData';
-import utils from '../../helpers/utils';
 import './pins.scss';
 
-const removePin = (e) => {
-  const removePinId = e.target.closest('.card').id;
-  const removePinBoardId = e.data;
-
-  pinsData.deletePin(removePinId)
-    .then(() => {
-      pinsData.getPinsByBoardId(removePinBoardId)
-        .then((pins) => {
-          let domString = '';
-
-          if (pins.length === 0) {
-            domString += '';
-          } else {
-            // eslint-disable-next-line no-use-before-define
-            domString += buildPins(pins);
-          }
-
-          utils.printToDom('single-board-pins', domString);
-        })
-        .catch((err) => console.error('problem with get pins in remove pin', err));
-    })
-    .catch((err) => console.error('problem with delete pin in remove pin', err));
-};
-
-const makePin = (e) => {
-  e.preventDefault();
-  // const currentBoard = e.target.closest('.card').id;
-};
-
-const buildPins = (pins) => {
+const pinMaker = (pins) => {
   let domString = '';
 
   domString += '<div id="pin-container" class="d-flex flex-wrap pl-3 pr-3">';
@@ -50,4 +19,4 @@ const buildPins = (pins) => {
   return domString;
 };
 
-export default { buildPins, removePin, makePin };
+export default { pinMaker };

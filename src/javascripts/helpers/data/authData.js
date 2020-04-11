@@ -20,7 +20,7 @@ const checkLoginStatus = () => {
       logoutButton.removeClass('hide');
       allBoards.buildBoards();
       allBoards.boardsEvents();
-      singleBoard.pinsEvents();
+      singleBoard.singleBoardEvents();
     } else {
       homeDiv.removeClass('hide');
       authDiv.removeClass('hide');
