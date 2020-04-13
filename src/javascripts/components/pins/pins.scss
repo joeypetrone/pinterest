@@ -2,12 +2,22 @@
   display: flex;
   flex-wrap: wrap;
 
-  .delete-pin {
-    position: absolute;
-    top: 6px;
-    left: 214px;
+  .inline-buttons {
     display: none;
+
+    .delete-pin {
+      position: absolute;
+      top: 6px;
+      left: 214px;
+    }
+  
+    .move-pin-dropdown {
+      position: absolute;
+      top: 6px;
+      left: 5px;
+    }
   }
+
 
   .card {
     border: 0px !important;
@@ -20,7 +30,11 @@
     opacity: 0.9;
   }
 
-  img:hover + .delete-pin, .delete-pin:hover {
+  img:hover + .inline-buttons, .inline-buttons:hover {
     display: inline-block;
   }
+
+  // img:hover + .move-pin-dropdown, .move-pin-dropdown {
+  //   display: inline-block;
+  // }
 }
