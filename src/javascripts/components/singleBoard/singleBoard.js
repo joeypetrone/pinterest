@@ -72,6 +72,20 @@ const clearPinInputValidationEvent = () => {
   $('#pin-image-url').removeClass('is-invalid');
 };
 
+// MOVE PIN EVENT //
+const movePinEvent = (e) => {
+  const pinId = e.target.closest('.card').id;
+  const currentBoardId = e.target.closest('.single-pin').id;
+  const moveToBoardId = e.target.closest('option').id;
+
+  pinsData.movePin(moveToBoardId, pinId)
+    .then(() => {
+      // eslint-disable-next-line no-use-before-define
+      buildSingleBoard(currentBoardId);
+    })
+    .catch((err) => console.error('could not move pin', err));
+};
+
 // BUILD SINGLE BOARD EVENT //
 const buildSingleBoardEvent = (e) => {
   const boardId = e.target.closest('.card').id;
@@ -98,9 +112,10 @@ const buildSingleBoard = (boardId) => {
           utils.printToDom('single-board', domString);
           pinsData.getPinsByBoardId(boardId)
             .then((pins) => {
-              domString = pinComponent.pinMaker(pins);
+              domString = pinComponent.pinMaker(pins, boards, board.id);
               utils.printToDom('single-board-pins', domString);
               $('#single-board-pins').on('click', '.delete-pin', boardId, removePinEvent);
+              $('option').on('click', movePinEvent);
             })
             .catch((err) => console.error('problem with get pins in single board', err));
         }

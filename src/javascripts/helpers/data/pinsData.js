@@ -23,4 +23,11 @@ const deletePin = (pinId) => axios.delete(`${baseUrl}/pins/${pinId}.json`);
 
 const addPin = (newPin) => axios.post(`${baseUrl}/pins.json`, newPin);
 
-export default { getPinsByBoardId, deletePin, addPin };
+const movePin = (newBoard, pinId) => axios.patch(`${baseUrl}/pins/${pinId}.json`, { boardId: newBoard });
+
+export default {
+  getPinsByBoardId,
+  deletePin,
+  addPin,
+  movePin,
+};
